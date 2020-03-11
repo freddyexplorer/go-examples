@@ -1,12 +1,12 @@
-FROM golang:1.10.0
+FROM golang:1.14.0
 
 WORKDIR /go/src/app
 
 COPY . .
 
-RUN go get -d -v ./...
+ENV GOPROXY https://fredsimon.jfrog.io/fredsimon/api/go/go
 
+RUN go mod download
 RUN go install -v ./...
 
 ENTRYPOINT ["app"]
-
