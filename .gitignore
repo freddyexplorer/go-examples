@@ -3,8 +3,11 @@
 *.dll
 *.so
 *.dylib
-go-test
-go-examples
+
+# Executable names
+/go-test
+/go-examples
+/app
 
 # Test binary, build with `go test -c`
 *.test

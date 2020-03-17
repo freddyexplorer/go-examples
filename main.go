@@ -2,6 +2,7 @@ package main
 
 import (
 	"fmt"
+	"github.com/gorilla/mux"
 	"log"
 	"net/http"
 	"strings"
@@ -13,7 +14,7 @@ import (
  *
  */
 func sayhelloName(w http.ResponseWriter, r *http.Request) {
-	r.ParseForm()       // parse arguments, you have to call this by yourself
+	w.Header().Set("Content-Type", "application/json")
 	fmt.Println(r.Form) // print form information in server side
 	fmt.Println("path", r.URL.Path)
 	fmt.Println("scheme", r.URL.Scheme)
@@ -26,8 +27,9 @@ func sayhelloName(w http.ResponseWriter, r *http.Request) {
 }
 
 func main() {
-	http.HandleFunc("/", sayhelloName)       // set router
-	err := http.ListenAndServe(":8063", nil) // set listen port
+	r := mux.NewRouter()
+	r.HandleFunc("/", sayhelloName)
+	err := http.ListenAndServe(":8063", r) // set listen port
 	if err != nil {
 		log.Fatal("ListenAndServe: ", err)
 	}
